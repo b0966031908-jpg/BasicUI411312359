@@ -67,14 +67,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Main(modifier: Modifier = Modifier) {
 
-    var Animals = listOf(R.drawable.animal0, R.drawable.animal1,
+    var Animals = listOf(
+        R.drawable.animal0, R.drawable.animal1,
         R.drawable.animal2, R.drawable.animal3,
         R.drawable.animal4, R.drawable.animal5,
         R.drawable.animal6, R.drawable.animal7,
-        R.drawable.animal8, R.drawable.animal9)
+        R.drawable.animal8, R.drawable.animal9
+    )
 
-    var AnimalsName = arrayListOf("鴨子","企鵝",
-        "青蛙","貓頭鷹","海豚", "牛", "無尾熊", "獅子", "狐狸", "小雞")
+    var AnimalsName = arrayListOf(
+        "鴨子", "企鵝",
+        "青蛙", "貓頭鷹", "海豚", "牛", "無尾熊", "獅子", "狐狸", "小雞"
+    )
 
     // 取得當前的 Context
     val context = LocalContext.current
@@ -90,16 +94,17 @@ fun Main(modifier: Modifier = Modifier) {
             mper = null
         }
     }
+    var animals by remember{mutableStateOf(R.drawable.animal1)}
 
-
-    Column (
+    Column(
         modifier = modifier
             .fillMaxSize() // 1. 設定全螢幕（填滿父容器）
             .background(Color(0xFFE0BBE4)), // 4. 設定背景為淺紫色
         horizontalAlignment = Alignment.CenterHorizontally, // 2. 設定水平置中
         verticalArrangement = Arrangement.Top // 3. 設定垂直靠上
     ) {
-        Text(text = stringResource(R.string.app_title),
+        Text(
+            text = stringResource(R.string.app_title),
             fontSize = 25.sp,
             color = Color.Blue,
             fontFamily = FontFamily(Font(R.font.kai))
@@ -108,7 +113,8 @@ fun Main(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.size(10.dp))
 
-        Text(text = stringResource(R.string.app_author),
+        Text(
+            text = stringResource(R.string.app_author),
             fontSize = 20.sp,
             color = Color(0xFF654321)
         )
@@ -124,7 +130,7 @@ fun Main(modifier: Modifier = Modifier) {
                     .clip(CircleShape)
                     .background(Color.Yellow),
                 alpha = 0.6f,
-                )
+            )
 
             Image(
                 painter = painterResource(id = R.drawable.compose),
@@ -162,10 +168,9 @@ fun Main(modifier: Modifier = Modifier) {
         var flag by remember { mutableStateOf("test") }
 
         Button(onClick = {
-            if(flag == "test") {
+            if (flag == "test") {
                 flag = "abc"
-            }
-            else {
+            } else {
                 flag = "test"
             }
 
@@ -182,14 +187,15 @@ fun Main(modifier: Modifier = Modifier) {
         Text(text = flag)
 
         Spacer(modifier = Modifier.size(10.dp))
-        Row{
-            Button(onClick = {
-                mper?.release()  //釋放資源
-                mper = null // 清除舊引用
-                mper = MediaPlayer.create(context, R.raw.fly) //設定音樂
-                mper?.start()
+        Row {
+            Button(
+                onClick = {
+                    mper?.release()  //釋放資源
+                    mper = null // 清除舊引用
+                    mper = MediaPlayer.create(context, R.raw.fly) //設定音樂
+                    mper?.start()
 
-            },
+                },
 
                 modifier = Modifier
                     .fillMaxWidth(0.33f)
@@ -202,20 +208,21 @@ fun Main(modifier: Modifier = Modifier) {
                 Text(text = "修課", color = Color.Red)
                 Image(
                     painterResource(id = R.drawable.teacher),
-                    contentDescription ="teacher icon")
+                    contentDescription = "teacher icon"
+                )
             }
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Button(onClick = {
+            Button(
+                onClick = {
 
-            },
+                },
 
                 modifier = Modifier
                     .fillMaxWidth(0.5f)
                     .fillMaxHeight(0.4f),
                 colors = buttonColors(Color.Blue)
-
 
 
             ) {
@@ -224,10 +231,11 @@ fun Main(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Button(onClick = {
+            Button(
+                onClick = {
 
-                val activity = context as? Activity
-                activity?.finish()
+                    val activity = context as? Activity
+                    activity?.finish()
 
                 },
 
@@ -248,6 +256,29 @@ fun Main(modifier: Modifier = Modifier) {
                 Text(text = "結束App")
             }
         }
+            Button(
+                onClick = {
+                    animals = if (animals == R.drawable.animal1) {
+                        R.drawable.animal0
+                    } else {
+                        R.drawable.animal1
+                    }
+
+
+                },
+
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .fillMaxHeight(1f),
+                colors = buttonColors(Color.Red)
+
+            ) {
+                Image(
+                    painterResource(id = animals),
+                    contentDescription = "動物切換"
+                )
+
+            }
 
     }
 }
